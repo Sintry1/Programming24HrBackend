@@ -16,7 +16,7 @@ public class CandidateService {
         this.candidateRepository = candidateRepository;
     }
 
-    public Candidate findById(int id){
+    public Candidate findById(Long id){
         return candidateRepository.findCandidateById(id);
     }
 

@@ -18,13 +18,13 @@ public class PartyService {
         this.partyRepository = partyRepository;
     }
 
-    public Party findById(int id){
+    public Party findById(Long id){
         return partyRepository.findPartyById(id);
     }
 
     public Set<Candidate> getPartyMembers(Party party){
         Set<Candidate> partyMembers;
-        partyMembers = party.getCandidateList();
+        partyMembers = party.getCandidates();
         return partyMembers;
     }
 

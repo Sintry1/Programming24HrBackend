@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
-    Candidate findCandidateById(int id);
-    List<Candidate> deleteCandidateById(int id);
+    Candidate findCandidateById(Long id);
+    List<Candidate> deleteCandidateById(Long id);
     List<Candidate> findCandidateByFirstName(String firstName);
 }

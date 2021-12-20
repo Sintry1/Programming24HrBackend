@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartyRepository extends JpaRepository<Party, Integer> {
-    Party findPartyById(int id);
+    Party findPartyById(Long id);
 }

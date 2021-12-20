@@ -1,9 +1,9 @@
 package localelection.programming24hr.controllers;
 
-import localelection.programming24hr.entities.Candidate;
 import localelection.programming24hr.entities.Party;
 import localelection.programming24hr.services.CandidateService;
 import localelection.programming24hr.services.PartyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/parties")
 public class PartyController {
 
+    @Autowired
     PartyService partyService;
+
+    @Autowired
     CandidateService candidateService;
 
     public PartyController(PartyService partyService) {
@@ -24,30 +27,27 @@ public class PartyController {
     }
 
     @GetMapping("/{id}")
-    public Party getPartyById(@PathVariable int id){
+    public Party getPartyById(@PathVariable Long id){
         return partyService.findById(id);
     }
 
     @PostMapping("/parties")
-    public Party createNewParty(@RequestBody Party party) {
+    public Party addParty(@RequestBody Party party) {
         return partyService.save(party);
     }
 
-    @PutMapping("/addcandidate/{partyId}/{candidateId}")
-    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId) {
-        Party party = partyService.findById(partyId);
-        Candidate candidate = candidateService.findById(candidateId);
-
-        party.addCandidate(candidate);
-
-        partyService.save(party);
-        return getPartyById(partyId);
-    }
+//    @PutMapping("/addcandidate/{partyId}/{candidateId}")
+//    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId, @RequestBody Party party) {
+//        party = partyService.findById(partyId);
+//        party.addCandidate(candidateService.findById(candidateId));
+//
+//        return partyService.saveParty(party);
+//    }
 
 //    @PutMapping("/addcandidate/{partyId}/{candidateId}")
 //    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId){
 //        Party party = partyService.findById(partyId);
-//        Candidate candidate = candidateService.findCandidateById(candidateId);
+//        Candidate candidate = candidateService.findById(candidateId);
 //
 //        partyService.addCandidate(party, candidate);
 //        partyService.save(party);
