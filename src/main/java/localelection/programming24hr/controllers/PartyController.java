@@ -33,8 +33,8 @@ public class PartyController {
         return partyService.save(party);
     }
 
-    @PutMapping("/createcandidate/{partyId}/{candidateId}")
-    public Party createCandidate(@PathVariable int partyId, @PathVariable int candidateId) {
+    @PutMapping("/addcandidate/{partyId}/{candidateId}")
+    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId) {
         Party party = partyService.findById(partyId);
         Candidate candidate = candidateService.findById(candidateId);
 
