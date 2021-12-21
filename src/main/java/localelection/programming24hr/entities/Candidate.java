@@ -14,7 +14,7 @@ public class Candidate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String firstName;
     private String surname;
     private int yearsExperience;

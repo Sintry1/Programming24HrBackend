@@ -24,10 +24,25 @@ public class CandidateController {
 
 
     // Required endpoint
+
     // Working - Though not displaying Party
     @GetMapping("/all")
     public List<Candidate> getAllCandidates(){
         return candidateService.findAllCandidates();
+    }
+
+    // Required endpoint
+
+    // Currently the bane of my existence and of course not working
+    @PutMapping("/addparty/{candidateId}/{partyId}")
+    public Candidate addPartyToCandidate(@PathVariable int candidateId, @PathVariable Long partyId){
+        Candidate candidate = candidateService.findById(candidateId);
+        Party party = new Party();
+        party = partyService.findById(partyId);
+
+        candidate.setParty(party);
+
+        return candidateService.saveCandidate(candidate);
     }
 
     // Optional endpoint
@@ -41,7 +56,7 @@ public class CandidateController {
 
     // Working
     @GetMapping("/{id}")
-    public Candidate getCandidateById(@PathVariable Long id){
+    public Candidate getCandidateById(@PathVariable int id){
         return candidateService.findById(id);
     }
 
@@ -57,7 +72,7 @@ public class CandidateController {
 
     // Working
     @PutMapping("/editCandidate/{id}")
-    public Candidate editCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
+    public Candidate editCandidate(@PathVariable int id, @RequestBody Candidate candidate) {
         candidate.setId(id);
         candidate.setFirstName(candidate.getFirstName());
         candidate.setSurname(candidate.getSurname());
@@ -72,7 +87,7 @@ public class CandidateController {
     // Working
     @Transactional
     @DeleteMapping("/delete/{id}")
-    public Iterable<Candidate> deleteCandidate(@PathVariable Long id) {
+    public Iterable<Candidate> deleteCandidate(@PathVariable int id) {
         Candidate candidate = candidateService.findById(id);
 
         candidateService.removeCandidate(candidate);
@@ -85,19 +100,6 @@ public class CandidateController {
     @GetMapping("/parties/{id}")
     public List<Candidate> getCandidatesByParty(@PathVariable Long id){
         return candidateService.findCandidatesByParty(id);
-    }
-
-    // Required endpoint
-
-    // Currently the bane of my existence and of course not working
-    @PutMapping("/addparty/{candidateId}/{partyId}")
-    public Candidate addPartyToCandidate(@PathVariable Long candidateId, @PathVariable Long partyId, @RequestBody Candidate candidate){
-        candidate = candidateService.findById(candidateId);
-        Party party = partyService.findById(partyId);
-
-        candidate.setParty(party);
-
-        return candidateService.saveCandidate(candidate);
     }
 
 //    @GetMapping("/parties/{partyId}")

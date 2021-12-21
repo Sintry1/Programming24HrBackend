@@ -5,7 +5,9 @@ import localelection.programming24hr.entities.Party;
 import localelection.programming24hr.repositories.CandidateRepository;
 import localelection.programming24hr.repositories.PartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,8 +23,8 @@ public class CandidateService {
         this.candidateRepository = candidateRepository;
     }
 
-    public Candidate findById(Long id){
-        return candidateRepository.findCandidateById(id);
+    public Candidate findById(int id){
+        return candidateRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Candidate found for ID: " + id));
     }
 
     public List<Candidate> findAllCandidates() {

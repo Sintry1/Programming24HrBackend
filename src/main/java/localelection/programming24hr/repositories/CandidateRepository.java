@@ -11,6 +11,6 @@ import java.util.List;
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
     Candidate findCandidateById(Long id);
     List<Candidate> findCandidateByPartyId(Long id);
-    List<Candidate> deleteCandidateById(Long id);
+    List<Candidate> deleteCandidateById(int id);
     List<Candidate> findCandidateByFirstName(String firstName);
 }
