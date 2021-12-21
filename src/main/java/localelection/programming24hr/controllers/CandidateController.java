@@ -37,8 +37,7 @@ public class CandidateController {
     @PutMapping("/addparty/{candidateId}/{partyId}")
     public Candidate addPartyToCandidate(@PathVariable int candidateId, @PathVariable Long partyId){
         Candidate candidate = candidateService.findById(candidateId);
-        Party party = new Party();
-        party = partyService.findById(partyId);
+        Party party = partyService.findById(partyId);
 
         candidate.setParty(party);
 
