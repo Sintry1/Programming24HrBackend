@@ -1,11 +1,8 @@
 package localelection.programming24hr.services;
 
-import localelection.programming24hr.entities.Candidate;
 import localelection.programming24hr.entities.Party;
 import localelection.programming24hr.repositories.PartyRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 
 @Service
@@ -19,13 +16,7 @@ public class PartyService {
     }
 
     public Party findById(Long id){
-        return partyRepository.findPartyById(id);
-    }
-
-    public Set<Candidate> getPartyMembers(Party party){
-        Set<Candidate> partyMembers;
-        partyMembers = party.getCandidates();
-        return partyMembers;
+        return partyRepository.findById(id);
     }
 
     public Iterable<Party> getAll(){

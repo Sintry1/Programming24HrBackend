@@ -20,10 +20,17 @@ public class Candidate {
     private int yearsExperience;
 
     @JsonBackReference
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.MERGE)
     @JoinColumn(name = "party_id", referencedColumnName = "id")
     private Party party;
 
+
+    public Candidate(String firstName, String surname, int yearsExperience, Party party) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.yearsExperience = yearsExperience;
+        this.party = party;
+    }
 
     public Candidate(String firstName, String surname, int yearsExperience) {
         this.firstName = firstName;
@@ -31,10 +38,4 @@ public class Candidate {
         this.yearsExperience = yearsExperience;
     }
 
-//    public Candidate(String firstName, String surname, int yearsExperience, Party party) {
-//        this.firstName = firstName;
-//        this.surname = surname;
-//        this.yearsExperience = yearsExperience;
-//        this.party = party;
-//    }
 }

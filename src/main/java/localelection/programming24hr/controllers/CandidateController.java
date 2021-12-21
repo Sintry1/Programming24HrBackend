@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-//@RequestMapping("/candidates")
+@RequestMapping("/candidates")
 public class CandidateController {
 
     CandidateService candidateService;
@@ -22,34 +22,56 @@ public class CandidateController {
         this.candidateService = candidateService;
     }
 
-    @GetMapping("/candidates/all")
-    public Iterable<Candidate> getAllCandidates(){
+
+    // Required endpoint
+    // Working - Though not displaying Party
+    @GetMapping("/all")
+    public List<Candidate> getAllCandidates(){
         return candidateService.findAllCandidates();
     }
 
-    @GetMapping("/candidates/name/{name}")
+    // Optional endpoint
+    // Working
+    @GetMapping("/name/{name}")
     public List<Candidate> getCandidateByName(@PathVariable String name){
         return candidateService.findCandidateByName(name);
     }
 
-    @GetMapping("/candidates/{id}")
+    // Optional endpoint
+
+    // Working
+    @GetMapping("/{id}")
     public Candidate getCandidateById(@PathVariable Long id){
         return candidateService.findById(id);
     }
 
-    @PostMapping("/candidates/createCandidate")
+    //Optional Endpoint
+
+    // Working
+    @PostMapping("")
     public Candidate createCandidate(@RequestBody Candidate candidate) {
-        return candidateService.saveCandidate(candidate);
+        return candidateService.saveCandidateNoParty(candidate);
     }
 
-    @PutMapping("/candidates/editCandidate/{id}")
+    // Optional Endpoint
+
+    // Working
+    @PutMapping("/editCandidate/{id}")
     public Candidate editCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
         candidate.setId(id);
-        return candidateService.saveCandidate(candidate);
+        candidate.setFirstName(candidate.getFirstName());
+        candidate.setSurname(candidate.getSurname());
+        candidate.setYearsExperience(candidate.getYearsExperience());
+        candidate.setParty(candidate.getParty());
+
+        return candidateService.saveCandidateNoParty(candidate);
     }
 
+    // Optional Endpoint
+
+    // Working
     @Transactional
-    @DeleteMapping("/cadndidates/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public Iterable<Candidate> deleteCandidate(@PathVariable Long id) {
         Candidate candidate = candidateService.findById(id);
 
@@ -57,15 +79,25 @@ public class CandidateController {
         return candidateService.findAllCandidates();
     }
 
-    @PutMapping("/parties/addcandidate/{candidateId}/{partyId}")
-    public Party addCandidateToParty(@PathVariable Long candidateId, @PathVariable Long partyId){
-        Candidate candidate = candidateService.findById(candidateId);
+    // Required Endpoint
+
+    // Working
+    @GetMapping("/parties/{id}")
+    public List<Candidate> getCandidatesByParty(@PathVariable Long id){
+        return candidateService.findCandidatesByParty(id);
+    }
+
+    // Required endpoint
+
+    // Currently the bane of my existence and of course not working
+    @PutMapping("/addparty/{candidateId}/{partyId}")
+    public Candidate addPartyToCandidate(@PathVariable Long candidateId, @PathVariable Long partyId, @RequestBody Candidate candidate){
+        candidate = candidateService.findById(candidateId);
         Party party = partyService.findById(partyId);
 
         candidate.setParty(party);
-        candidateService.saveCandidate(candidate);
 
-        return party;
+        return candidateService.saveCandidate(candidate);
     }
 
 //    @GetMapping("/parties/{partyId}")
