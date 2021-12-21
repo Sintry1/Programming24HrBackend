@@ -1,7 +1,6 @@
 package localelection.programming24hr.controllers;
 
 import localelection.programming24hr.entities.Candidate;
-import localelection.programming24hr.entities.Party;
 import localelection.programming24hr.services.CandidateService;
 import localelection.programming24hr.services.PartyService;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +33,20 @@ public class CandidateController {
     // Required endpoint
 
     // Currently the bane of my existence and of course not working
+//    @PutMapping("/addparty/{candidateId}/{partyId}")
+//    public Candidate addCandidateToParty(@PathVariable int candidateId, @PathVariable int partyId){
+//        Candidate candidate = candidateService.findById(candidateId);
+//        Party party = partyService.findById(partyId);
+//
+//        candidate.setParty(party);
+//
+//        return candidateService.saveCandidate(candidate);
+//    }
+
+
+    // This also doesn't work. Again the Party is null if attended to access from here
     @PutMapping("/addparty/{candidateId}/{partyId}")
-    public Candidate addPartyToCandidate(@PathVariable int candidateId, @PathVariable Long partyId){
-        Candidate candidate = candidateService.findById(candidateId);
-        Party party = partyService.findById(partyId);
-
-        candidate.setParty(party);
-
+    public Candidate addCandidateToParty(@RequestBody Candidate candidate){
         return candidateService.saveCandidate(candidate);
     }
 
@@ -97,7 +103,7 @@ public class CandidateController {
 
     // Working
     @GetMapping("/parties/{id}")
-    public List<Candidate> getCandidatesByParty(@PathVariable Long id){
+    public List<Candidate> getCandidatesByParty(@PathVariable int id){
         return candidateService.findCandidatesByParty(id);
     }
 

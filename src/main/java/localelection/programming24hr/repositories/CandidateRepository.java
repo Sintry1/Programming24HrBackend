@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
     Candidate findCandidateById(Long id);
-    List<Candidate> findCandidateByPartyId(Long id);
+    List<Candidate> findCandidateByPartyId(int id);
     List<Candidate> deleteCandidateById(int id);
     List<Candidate> findCandidateByFirstName(String firstName);
 }

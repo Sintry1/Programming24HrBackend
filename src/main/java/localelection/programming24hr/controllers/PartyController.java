@@ -1,6 +1,8 @@
 package localelection.programming24hr.controllers;
 
+import localelection.programming24hr.entities.Candidate;
 import localelection.programming24hr.entities.Party;
+import localelection.programming24hr.repositories.PartyRepository;
 import localelection.programming24hr.services.CandidateService;
 import localelection.programming24hr.services.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ public class PartyController {
 
     @Autowired
     PartyService partyService;
+
+    PartyRepository partyRepository;
 
     @Autowired
     CandidateService candidateService;
@@ -27,22 +31,28 @@ public class PartyController {
     }
 
     @GetMapping("/{id}")
-    public Party getPartyById(@PathVariable Long id){
+    public Party getPartyById(@PathVariable int id){
         return partyService.findById(id);
     }
 
     @PostMapping("/parties")
     public Party addParty(@RequestBody Party party) {
-        return partyService.save(party);
+        return partyRepository.save(party);
     }
 
-//    @PutMapping("/addcandidate/{partyId}/{candidateId}")
-//    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId, @RequestBody Party party) {
-//        party = partyService.findById(partyId);
-//        party.addCandidate(candidateService.findById(candidateId));
-//
-//        return partyService.saveParty(party);
-//    }
+
+    // Required Endpoint
+
+    // Not working on this Controller either. Always returns a Null Value
+    @PutMapping("/addcandidate/{partyId}/{candidateId}")
+    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId) {
+        Party party = partyService.findById(partyId);
+        Candidate candidate = candidateService.findById(candidateId);
+
+        party.addCandidates(candidate);
+
+        return partyRepository.saveAndFlush(party);
+    }
 
 //    @PutMapping("/addcandidate/{partyId}/{candidateId}")
 //    public Party addCandidateToParty(@PathVariable int partyId, @PathVariable int candidateId){

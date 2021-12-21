@@ -35,13 +35,13 @@ public class CandidateService {
 //        return candidateRepository.findCandidateByPartyId(partyId);
 //    }
 
-    public List<Candidate> findCandidatesByParty(Long id){
+    public List<Candidate> findCandidatesByParty(int id){
         return candidateRepository.findCandidateByPartyId(id);
     }
 
     public Candidate editCandidate(Long id) {
         Candidate candidate = candidateRepository.findCandidateById(id);
-        Party party = partyRepository.findById(candidate.getParty().getId());
+        Party party = partyRepository.getById(candidate.getParty().getId());
 
         candidate.setFirstName(candidate.getFirstName());
         candidate.setSurname(candidate.getSurname());
@@ -51,7 +51,7 @@ public class CandidateService {
     }
 
     public Candidate saveCandidate(Candidate candidate) {
-        Party party = partyRepository.findById(candidate.getParty().getId());
+        Party party = partyRepository.getById(candidate.getParty().getId());
         candidate = new Candidate(candidate.getFirstName(), candidate.getSurname(), candidate.getYearsExperience(), party);
         return candidateRepository.save(candidate);
     }

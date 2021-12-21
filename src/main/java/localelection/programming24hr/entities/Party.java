@@ -16,7 +16,7 @@ public class Party {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String name;
     private int votes; // Try and tally up individual candidates' votes to calculate this.
@@ -24,6 +24,11 @@ public class Party {
 
     @OneToMany(mappedBy = "party")
     private Set<Candidate> candidates = new HashSet<>();
+
+    public Set<Candidate> addCandidates(Candidate candidate){
+        candidates.add(candidate);
+        return candidates;
+    }
 
     public Party(String name, int votes) {
         this.name = name;
