@@ -3,10 +3,10 @@ package localelection.programming24hr.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity(name = "party")
@@ -22,8 +22,8 @@ public class Party {
     private int votes; // Try and tally up individual candidates' votes to calculate this.
     // private String municipality;
 
-//    @OneToMany (mappedBy = "party")
-//    private Set<Candidate> candidates = new HashSet<>();
+    @OneToMany(mappedBy = "party")
+    private Set<Candidate> candidates = new HashSet<>();
 
     public Party(String name, int votes) {
         this.name = name;

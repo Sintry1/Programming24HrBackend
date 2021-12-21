@@ -32,10 +32,4 @@ public class Candidate {
         this.party = party;
     }
 
-    public Candidate(String firstName, String surname, int yearsExperience) {
-        this.firstName = firstName;
-        this.surname = surname;
-        this.yearsExperience = yearsExperience;
-    }
-
 }
